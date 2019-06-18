@@ -416,6 +416,7 @@ class Daemon(metaclass=JSONRPCServerType):
             await rpc_site.start()
             log.info('RPC server listening on TCP %s:%i', *rpc_site._server.sockets[0].getsockname()[:2])
         except OSError as e:
+            print(e)
             log.error('RPC server failed to bind TCP %s:%i', self.conf.api_host, self.conf.api_port)
             await self.analytics_manager.send_server_startup_error(str(e))
             raise SystemExit()
@@ -427,6 +428,7 @@ class Daemon(metaclass=JSONRPCServerType):
             log.info('media server listening on TCP %s:%i', *streaming_site._server.sockets[0].getsockname()[:2])
 
         except OSError as e:
+            print(e)
             log.error('media server failed to bind TCP %s:%i', self.conf.streaming_host, self.conf.streaming_port)
             await self.analytics_manager.send_server_startup_error(str(e))
             raise SystemExit()
